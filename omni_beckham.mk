@@ -59,6 +59,10 @@ PRODUCT_PACKAGES += \
     charger_res_images \
     charger
 
+# Time Zone data for recovery
+PRODUCT_COPY_FILES += \
+    system/timezone/output_data/iana/tzdata:recovery/root/system_root/usr/share/zoneinfo/tzdata
+
 PRODUCT_DEVICE := beckham
 PRODUCT_NAME := omni_beckham
 PRODUCT_BRAND := motorola
