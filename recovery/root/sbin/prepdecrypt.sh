@@ -85,14 +85,6 @@ cp /v/lib64/libkeymasterdeviceutils.so /vendor/lib64/
 cp /v/lib64/libkeymasterprovision.so /vendor/lib64/
 cp /v/lib64/libkeymasterutils.so /vendor/lib64/
 cp /v/lib64/libqtikeymaster4.so /vendor/lib64/
-cp /v/lib64/libdsutils.so /vendor/lib64/
-cp /v/lib64/libidl.so /vendor/lib64/
-cp /v/lib64/libmdmdetect.so /vendor/lib64/
-cp /v/lib64/libqmiservices.so /vendor/lib64/
-cp /v/lib64/libqmi_cci.so /vendor/lib64/
-cp /v/lib64/libqmi_client_qmux.so /vendor/lib64/
-cp /v/lib64/libqmi_common_so.so /vendor/lib64/
-cp /v/lib64/libqmi_encdec.so /vendor/lib64/
 cp /v/lib64/hw/bootctrl.sdm660.so /vendor/lib64/hw/
 cp /v/lib64/hw/gatekeeper.sdm660.so /vendor/lib64/hw/
 cp /v/lib64/hw/keystore.sdm660.so /vendor/lib64/hw/
@@ -111,7 +103,6 @@ fi
 relink /v/bin/hw/android.hardware.boot@1.0-service
 relink /v/bin/hw/android.hardware.gatekeeper@1.0-service-qti
 relink /v/bin/hw/android.hardware.keymaster@3.0-service-qti
-relink /v/bin/time_daemon
 
 finish
 exit 0
