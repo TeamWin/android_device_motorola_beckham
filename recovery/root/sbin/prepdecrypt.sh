@@ -36,26 +36,34 @@ if [ ! -z "$is_fastboot_twrp" ]; then
   patchlevel=$(getprop ro.build.version.security_patch_orig)
   setprop ro.build.version.release "$osver"
   setprop ro.build.version.security_patch "$patchlevel"
+  setprop ro.vendor.build.security_patch "2018-11-05"
   finish
 fi
 
+build_prop_path="/s/build.prop"
 if [ -f /s/system/build.prop ]; then
+  build_prop_path="/s/system/build.prop"
+fi
+
+vendor_prop_path="/v/build.prop"
+if [ -f "$build_prop_path" ]; then
   # TODO: It may be better to try to read these from the boot image than from /system
-  osver=$(grep -i 'ro.build.version.release' /s/system/build.prop  | cut -f2 -d'=')
-  patchlevel=$(grep -i 'ro.build.version.security_patch' /s/system/build.prop  | cut -f2 -d'=')
+  osver=$(grep -i 'ro.build.version.release' "$build_prop_path"  | cut -f2 -d'=')
+  patchlevel=$(grep -i 'ro.build.version.security_patch' "$build_prop_path"  | cut -f2 -d'=')
+  vendorlevel=$(grep -i 'ro.vendor.build.security_patch' "$vendor_prop_path"  | cut -f2 -d'=')
   setprop ro.build.version.release "$osver"
   setprop ro.build.version.security_patch "$patchlevel"
-  finish
+  setprop ro.vendor.build.security_patch "$vendorlevel"
 else
   # Be sure to increase the PLATFORM_VERSION in build/core/version_defaults.mk to override Google's anti-rollback features to something rather insane
   osver=$(getprop ro.build.version.release_orig)
   patchlevel=$(getprop ro.build.version.security_patch_orig)
   setprop ro.build.version.release "$osver"
   setprop ro.build.version.security_patch "$patchlevel"
-  finish
+  setprop ro.vendor.build.security_patch "2018-11-05"
 fi
+finish
 
-###### NOTE: The below is no longer used but I'm keeping it here in case it is needed again at some point!
 mkdir -p /vendor/lib64/hw/
 
 cp /s/system/lib64/android.hardware.boot@1.0.so /sbin/
@@ -108,5 +116,3 @@ relink /v/bin/hw/android.hardware.boot@1.0-service
 relink /v/bin/hw/android.hardware.gatekeeper@1.0-service-qti
 relink /v/bin/hw/android.hardware.keymaster@3.0-service-qti
 
-finish
-exit 0
